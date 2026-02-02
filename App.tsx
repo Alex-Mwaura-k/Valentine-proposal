@@ -103,24 +103,20 @@ const App: React.FC = () => {
     setHasMoved(true);
     setAttempts((prev) => prev + 1);
 
-    // --- CORNER LOGIC ---
-    // 0: Top-Left, 1: Top-Right, 2: Bottom-Left, 3: Bottom-Right
     let newCorner;
-
-    // Ensure we don't pick the same corner twice in a row
     do {
       newCorner = Math.floor(Math.random() * 4);
     } while (newCorner === lastCorner);
 
-    setLastCorner(newCorner); // Update history
+    setLastCorner(newCorner);
 
     const edge = "20px";
-    const bottomEdge = "80px"; // Higher padding at bottom to avoid footer
+    const bottomEdge = "80px";
 
     let newStyle = {};
 
     switch (newCorner) {
-      case 0: // Top-Left
+      case 0:
         newStyle = {
           top: edge,
           left: edge,
@@ -129,7 +125,7 @@ const App: React.FC = () => {
           position: "fixed",
         };
         break;
-      case 1: // Top-Right
+      case 1:
         newStyle = {
           top: edge,
           right: edge,
@@ -138,7 +134,7 @@ const App: React.FC = () => {
           position: "fixed",
         };
         break;
-      case 2: // Bottom-Left
+      case 2:
         newStyle = {
           bottom: bottomEdge,
           left: edge,
@@ -147,7 +143,7 @@ const App: React.FC = () => {
           position: "fixed",
         };
         break;
-      case 3: // Bottom-Right
+      case 3:
         newStyle = {
           bottom: bottomEdge,
           right: edge,
@@ -164,6 +160,13 @@ const App: React.FC = () => {
   };
 
   const handleYes = () => {
+    // --- TRACKING THE "YES" CLICK ---
+    ReactGA.event({
+      category: "Proposal",
+      action: "Accepted",
+      label: "Valentine",
+    });
+
     setIsAccepted(true);
     const duration = 15 * 1000;
     const animationEnd = Date.now() + duration;
@@ -313,7 +316,6 @@ const App: React.FC = () => {
           box-shadow: 0 15px 40px rgba(0,0,0,0.1);
         }
         
-        /* CARD STYLES */
         .card {
           padding: 3rem;
           border-radius: 40px;
@@ -432,9 +434,9 @@ const App: React.FC = () => {
         
         .no-btn {
           background-color: #f1f3f5;
-          color: #2d3436; /* Darker black text for readability */
+          color: #2d3436; 
           box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-          z-index: 9999; /* Ensure it stays on top */
+          z-index: 9999; 
         }
 
         .footer {
@@ -457,7 +459,6 @@ const App: React.FC = () => {
           color: #fff;
         }
 
-        /* ANIMATIONS */
         .animate-pop {
           animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
