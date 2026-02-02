@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import confetti from "canvas-confetti";
 import { Heart, Stars } from "lucide-react";
+import ReactGA from "react-ga4";
 
 const App: React.FC = () => {
   // State to track position style
@@ -28,6 +29,13 @@ const App: React.FC = () => {
   const [lastCorner, setLastCorner] = useState(-1);
 
   useEffect(() => {
+    // --- GOOGLE ANALYTICS INITIALIZATION ---
+    const TRACKING_ID = import.meta.env.VITE_GA_ID;
+    if (TRACKING_ID) {
+      ReactGA.initialize(TRACKING_ID);
+      ReactGA.send({ hitType: "pageview", page: window.location.pathname });
+    }
+
     const handleInteraction = () => {
       const elem = document.documentElement;
       if (!document.fullscreenElement && elem.requestFullscreen) {
