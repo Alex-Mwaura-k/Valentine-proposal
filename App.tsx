@@ -25,7 +25,7 @@ const App: React.FC = () => {
   const [hasMoved, setHasMoved] = useState(false);
   const [attempts, setAttempts] = useState(0);
 
-  // NEW: Track the last corner index to ensure it moves to a NEW spot
+  // Track the last corner index to ensure it moves to a NEW spot
   const [lastCorner, setLastCorner] = useState(-1);
 
   useEffect(() => {
@@ -111,7 +111,7 @@ const App: React.FC = () => {
     setLastCorner(newCorner);
 
     const edge = "20px";
-    const bottomEdge = "80px";
+    const bottomEdge = "85px"; // Extra padding for footer
 
     let newStyle = {};
 
@@ -160,7 +160,7 @@ const App: React.FC = () => {
   };
 
   const handleYes = () => {
-    // --- TRACKING THE "YES" CLICK ---
+    // --- TRACKING THE "YES" CLICK EVENT ---
     ReactGA.event({
       category: "Proposal",
       action: "Accepted",
@@ -402,7 +402,7 @@ const App: React.FC = () => {
         .button-area {
           position: relative;
           width: 100%;
-          min-height: 100px;
+          min-height: 160px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -428,9 +428,6 @@ const App: React.FC = () => {
           z-index: 5;
           transform-origin: center;
         }
-        .yes-btn:hover {
-          box-shadow: 0 12px 25px rgba(255, 64, 129, 0.6);
-        }
         
         .no-btn {
           background-color: #f1f3f5;
@@ -455,48 +452,39 @@ const App: React.FC = () => {
           text-decoration: underline; 
           margin-left: 2px;
         }
-        .footer a:hover {
-          color: #fff;
-        }
 
         .animate-pop {
           animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
         @keyframes popIn {
-          0% {
-            opacity: 0;
-            transform: scale(0.5) translateY(20px);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-          }
+          0% { opacity: 0; transform: scale(0.5) translateY(20px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         @keyframes float {
           0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-          10% { opacity: 0.5; }
-          90% { opacity: 0.5; }
           100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
         }
 
         @media (max-width: 600px) {
+          .button-area {
+            flex-direction: column-reverse; /* STACKS VERTICALLY: NO ON TOP */
+            justify-content: flex-end; /* ALIGNS CONTENT TO THE TOP REGION */
+            min-height: 240px; /* CREATES DEDICATED VERTICAL SPACE */
+            gap: 40px; /* FORCES LARGE GAP BETWEEN BUTTONS */
+          }
+          .no-btn {
+            margin-bottom: auto; /* PUSHES NO AS HIGH AS POSSIBLE */
+          }
+          .yes-btn {
+            margin-top: auto; /* PUSHES YES AS LOW AS POSSIBLE */
+            margin-bottom: 20px;
+          }
           .card {
             padding: 1.5rem;
-            width: 90%;
-            min-height: 400px;
-          }
-          .image-container {
-            height: 160px;
-          }
-          .valentine-gif {
-            height: 140px;
-          }
-          button {
-            padding: 12px 24px;
-            font-size: 1rem;
-            min-width: 120px;
+            width: 92%;
+            min-height: 480px;
           }
           .subtitle {
             font-size: 0.85rem; 
